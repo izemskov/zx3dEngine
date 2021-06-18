@@ -8,6 +8,9 @@
 #define ENGINE__H
 
 void drawLine(int x1, int y1, int x2, int y2);
+void drawVector(struct Vector * vector);
+void drawPoint(struct Point * point);
+
 void initContext();
 
 #endif
