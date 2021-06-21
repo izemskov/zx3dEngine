@@ -6,7 +6,7 @@
 
 /*
 	Compile program cmd:
-		zcc +zx -lndos -v -create-app -o zx3dEngine main.c engine.c point.c vector.c
+		zcc +zx -lndos -lmzx -v -create-app -o zx3dEngine main.c engine.c point.c vector.c model3d.c
 			+zx - Target
 			-v - Verbose
 			-lndos - Link with library ndos
@@ -14,10 +14,9 @@
 
 #include <malloc.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "engine.h"
-#include "vector.h"
-#include "point.h"
 
 long heap;
 
@@ -25,7 +24,27 @@ int main() {
 	mallinit();
 	sbrk(30000, 2000);
 
-	struct Point * point1 = newPoint(1, 2, 1);
+	initContext();
+
+	//struct Model3D * model = createOctahedron();
+	//drawModel3D(model);
+
+	struct Model3D * model = createCube();
+	while (1) {		
+		initContext();
+		drawModel3D(model);
+
+		sleep(1);
+	}
+
+	//double a = -0.01;
+
+	//printf("%f\n", a);
+	//printf("%f\n", fabs(a));
+
+	//printf("ok\n");
+
+	/*struct Point * point1 = newPoint(1, 2, 1);
 	struct Point * point2 = newPoint(0, 4, 4);
 	struct Vector * vector1 = newVector(2, 0, 0);
 	struct Vector * vector2;	
@@ -43,7 +62,7 @@ int main() {
 
 	subtractVectorFromPoint(point2, vector2);
 
-	drawPoint(point2);
+	drawPoint(point2);*/
 
 	/*int * a = (int *) malloc(20 * sizeof(int));
 

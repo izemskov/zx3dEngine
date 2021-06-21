@@ -4,11 +4,9 @@
  *
  * Copyright 2021 Ilya Zemskov */
 
-//#include <graphics.h>
+#include <graphics.h>
 #include <stdio.h>
-
-#include "vector.h"
-#include "point.h"
+#include <math.h>
 
 #include "engine.h"
 
@@ -29,6 +27,31 @@ void drawPoint(struct Point * point) {
 
     printf("%d,%d,%d", vector->x, vector->y, vector->z);
 }*/
+
+void drawModel3D(const struct Model3D * model3d) {
+	if (model3d == NULL)
+		return;		
+
+	for (int i = 0; i < model3d->edgesCount; i++) {
+		int xs, ys, xe, ye;
+
+		int x = model3d->vertices[model3d->edges[i].src].x + model3d->center.x;
+		int y = model3d->vertices[model3d->edges[i].src].y + model3d->center.y;
+		int z = model3d->vertices[model3d->edges[i].src].z + model3d->center.z;
+	
+		xs = HALF_SCREEN_WIDTH + SCREEN_DEPTH * x / z;
+		ys = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * y / z;
+
+		x = model3d->vertices[model3d->edges[i].dst].x + model3d->center.x;
+		y = model3d->vertices[model3d->edges[i].dst].y + model3d->center.y;
+		z = model3d->vertices[model3d->edges[i].dst].z + model3d->center.z;
+		
+		xe = HALF_SCREEN_WIDTH + SCREEN_DEPTH * x / z;
+		ye = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * y / z;
+
+		drawLine(xs, ys, xe, ye);
+	}
+}
 
 void initContext() {
 	clg();
