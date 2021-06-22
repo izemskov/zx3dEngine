@@ -6,7 +6,7 @@
 
 /*
 	Compile program cmd:
-		zcc +zx -lndos -lmzx -v -create-app -o zx3dEngine main.c engine.c point.c vector.c model3d.c
+		zcc +zx -lndos -lmzx -v -create-app -o zx3dEngine main.c engine.c point.c vector.c model3d.c linear_alg.c
 			+zx - Target
 			-v - Verbose
 			-lndos - Link with library ndos
@@ -15,8 +15,10 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "engine.h"
+#include "linear_alg.h"
 
 long heap;
 
@@ -30,12 +32,19 @@ int main() {
 	//drawModel3D(model);
 
 	struct Model3D * model = createCube();
-	while (1) {		
-		initContext();
+
+	while (1) {	
+		processModel(model);
+		initContext();					
 		drawModel3D(model);
 
-		sleep(1);
+		csleep(4);
+
+		model->angleY += 10;
+		if (model->angleY >= 360) 
+			model->angleY = model->angleY - 360;
 	}
+	free(model);
 
 	//double a = -0.01;
 

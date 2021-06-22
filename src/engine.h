@@ -22,7 +22,8 @@
 void drawLine(int x1, int y1, int x2, int y2);
 void drawVector(struct Vector * vector);
 void drawPoint(struct Point * point);
-void drawModel3D(const struct Model3D * model3d);
+void drawModel3D(struct Model3D * model3d);
+void processModel(struct Model3D * model3d);
 
 void initContext();
 

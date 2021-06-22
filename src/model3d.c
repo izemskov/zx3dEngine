@@ -92,8 +92,9 @@ struct Model3D * createCube() {
 
     model3D->verticesCount = 8;
     model3D->vertices = (struct Point *) malloc(model3D->verticesCount * sizeof(struct Point));
+    model3D->processedVerticies = (struct Point *) malloc(model3D->verticesCount * sizeof(struct Point));
 
-    model3D->vertices[0].x = 10;
+    /*model3D->vertices[0].x = 10;
     model3D->vertices[0].y = 10;
     model3D->vertices[0].z = 0;
 
@@ -123,7 +124,39 @@ struct Model3D * createCube() {
 
     model3D->vertices[7].x = 20;
     model3D->vertices[7].y = 10;
-    model3D->vertices[7].z = 10;
+    model3D->vertices[7].z = 10;*/
+
+    model3D->vertices[0].x = -5;
+    model3D->vertices[0].y = -5;
+    model3D->vertices[0].z = -5;
+
+    model3D->vertices[1].x = -5;
+    model3D->vertices[1].y = 5;
+    model3D->vertices[1].z = -5;
+
+    model3D->vertices[2].x = 5;
+    model3D->vertices[2].y = 5;
+    model3D->vertices[2].z = -5;
+
+    model3D->vertices[3].x = 5;
+    model3D->vertices[3].y = -5;
+    model3D->vertices[3].z = -5;
+
+    model3D->vertices[4].x = -5;
+    model3D->vertices[4].y = -5;
+    model3D->vertices[4].z = 5;
+
+    model3D->vertices[5].x = -5;
+    model3D->vertices[5].y = 5;
+    model3D->vertices[5].z = 5;
+
+    model3D->vertices[6].x = 5;
+    model3D->vertices[6].y = 5;
+    model3D->vertices[6].z = 5;
+
+    model3D->vertices[7].x = 5;
+    model3D->vertices[7].y = -5;
+    model3D->vertices[7].z = 5;
 
     model3D->edgesCount = 12;
     model3D->edges = (struct Edge *) malloc(model3D->edgesCount * sizeof(struct Edge));
@@ -164,9 +197,11 @@ struct Model3D * createCube() {
     model3D->edges[11].src = 3;
     model3D->edges[11].dst = 7;
 
-    model3D->center.x = 0;
-    model3D->center.y = 0;
+    model3D->center.x = 10;
+    model3D->center.y = 10;
     model3D->center.z = 20;
+
+    model3D->angleY = 0;
 
     return model3D;
 }
