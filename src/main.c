@@ -10,7 +10,15 @@
 			+zx - Target
 			-v - Verbose
 			-lndos - Link with library ndos
+
+		zcc +zx -lndos -lmzx -v -create-app -DLOW_RESOLUTION_MODE -o zx3dEngine main.c engine.c point.c vector.c model3d.c linear_alg.c
 */
+
+#ifdef LOW_RESOLUTION_MODE
+#define bufferedgfx 1
+
+#include <zxlowgfx.h>
+#endif
 
 #include <malloc.h>
 #include <stdio.h>
@@ -28,14 +36,12 @@ int main() {
 
 	initContext();
 
-	//struct Model3D * model = createOctahedron();
-	//drawModel3D(model);
+	struct Model3D * model = createCube();	
 
-	struct Model3D * model = createCube();
-
+	int i = 0;
 	while (1) {	
-		processModel(model);
-		initContext();					
+		processModel(model);		
+		clearScreen();		
 		drawModel3D(model);
 
 		csleep(4);
@@ -43,6 +49,19 @@ int main() {
 		model->angleY += 10;
 		if (model->angleY >= 360) 
 			model->angleY = model->angleY - 360;
+		
+		paintBuffer();
+
+		/*cclgbuffer(0);
+
+		cdraw(0, 0, 30, 30, 6);
+
+		i += 10;
+
+		if (i > 700)
+			i = 0;
+
+		ccopybuffer();*/
 	}
 	free(model);
 

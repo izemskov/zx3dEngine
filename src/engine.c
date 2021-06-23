@@ -4,7 +4,10 @@
  *
  * Copyright 2021 Ilya Zemskov */
 
+#ifndef LOW_RESOLUTION_MODE
 #include <graphics.h>
+#endif
+
 #include <stdio.h>
 #include <math.h>
 
@@ -13,7 +16,11 @@
 #include "engine.h"
 
 void drawLine(int x1, int y1, int x2, int y2) {
+#ifdef LOW_RESOLUTION_MODE
+	ddraw(x1, y1, x2, y2, 6);
+#else
 	draw(x1, y1, x2, y2);
+#endif
 }
 
 void drawPoint(struct Point * point) {
@@ -72,7 +79,9 @@ void drawModel3D(struct Model3D * model3d) {
 		xe = HALF_SCREEN_WIDTH + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].x / model3d->processedVerticies[model3d->edges[i].dst].z;
 		ye = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].y / model3d->processedVerticies[model3d->edges[i].dst].z;
 
-		drawLine(xs, ys, xe, ye);
+		//drawLine(xs, ys, xe, ye);
+
+		printf("xs = %d; ys = %d; xe = %d; ye = %d\n", xs, ys, xe, ye);
 	}
 }
 
@@ -96,5 +105,23 @@ void unDrawModel3D(struct Model3D * model3d) {
 }
 
 void initContext() {
+#ifdef LOW_RESOLUTION_MODE
+	cclg(0);
+#else
 	clg();
+#endif	
+}
+
+void clearScreen() {
+#ifdef LOW_RESOLUTION_MODE
+	cclgbuffer(0);
+#else
+	clg();
+#endif	
+}
+
+void paintBuffer() {
+#ifdef LOW_RESOLUTION_MODE
+	ccopybuffer();
+#endif	
 }

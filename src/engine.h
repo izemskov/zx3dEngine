@@ -12,12 +12,32 @@
 #include "edge.h"
 #include "model3d.h"
 
-#define SCREEN_WIDTH  256
-#define SCREEN_HEIGHT 192
-#define SCREEN_DEPTH  50
+#ifdef LOW_RESOLUTION_MODE
+    #define SCREEN_WIDTH  30
+    #define SCREEN_HEIGHT 30
+    #define HALF_SCREEN_WIDTH  15
+    #define HALF_SCREEN_HEIGHT 15
+#else
+    /*#define SCREEN_WIDTH  256
+    #define SCREEN_HEIGHT 192
+    #define HALF_SCREEN_WIDTH  128
+    #define HALF_SCREEN_HEIGHT 96*/
 
-#define HALF_SCREEN_WIDTH  128
-#define HALF_SCREEN_HEIGHT 96
+    #define SCREEN_WIDTH  30
+    #define SCREEN_HEIGHT 30
+    #define HALF_SCREEN_WIDTH  15
+    #define HALF_SCREEN_HEIGHT 15
+#endif
+
+#ifdef LOW_RESOLUTION_MODE
+    #ifdef ALTLOWGFX  
+        #define ddraw(x,y,x1,y1,c) cdraw(2*(x),y,2*(x1),y1,c);
+    #else
+        #define ddraw(x,y,x1,y1,c) cdraw(x,2*(y),x1,2*(y1),c);
+    #endif
+#endif
+
+#define SCREEN_DEPTH  50
 
 void drawLine(int x1, int y1, int x2, int y2);
 void drawVector(struct Vector * vector);
