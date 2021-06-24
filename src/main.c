@@ -32,11 +32,18 @@ long heap;
 
 int main() {
 	mallinit();
-	sbrk(30000, 2000);
+	sbrk(30000, 6000);
 
-	initContext();
+	initContext();	
 
 	struct Model3D * model = createCube();	
+
+#ifndef LOW_RESOLUTION_MODE
+	model->center.z = 15;
+#endif
+
+	//model->angleY += 10;
+	//processModel(model);
 
 	int i = 0;
 	while (1) {	
@@ -50,22 +57,9 @@ int main() {
 		if (model->angleY >= 360) 
 			model->angleY = model->angleY - 360;
 		
-		paintBuffer();
-
-		printf("%d", model->angleY);
-
-		/*cclgbuffer(0);
-
-		cdraw(0, 0, 30, 30, 6);
-
-		i += 10;
-
-		if (i > 700)
-			i = 0;
-
-		ccopybuffer();*/
+		paintBuffer();		
 	}
-	free(model);
+	deleteModel(model);	
 
 	//double a = -0.01;
 
@@ -92,20 +86,7 @@ int main() {
 
 	subtractVectorFromPoint(point2, vector2);
 
-	drawPoint(point2);*/
-
-	/*int * a = (int *) malloc(20 * sizeof(int));
-
-	a[0] = 20;
-	a[1] = 20;
-	a[2] = 30;
-	a[3] = 40;
-
-	initContext();
-
-	drawLine(a[0], a[1], a[2], a[3]);
-
-	free(a);*/
+	drawPoint(point2);*/	
 
 	return 0;
 }

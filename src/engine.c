@@ -41,20 +41,16 @@ void processModel(struct Model3D * model3d) {
 	if (model3d == NULL)
 		return;	
 
-	struct Matrix4x4 * rotateMatrixY = NULL;
-	if (model3d->angleY != 0) {
-		rotateMatrixY = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
-		getRotateOYMatrix(rotateMatrixY, model3d->angleY);
+	if (model3d->angleY != model3d->oldAngleY) {
+		getRotateOYMatrix(model3d->rotateMatrixY, model3d->angleY);
 	}
 
 	for (int i = 0; i < model3d->verticesCount; i++) {
 		model3d->processedVerticies[i].x = model3d->vertices[i].x;
 		model3d->processedVerticies[i].y = model3d->vertices[i].y;
 		model3d->processedVerticies[i].z = model3d->vertices[i].z;
-
-		if (rotateMatrixY != NULL) {
-			multMatrixPoint(rotateMatrixY, &model3d->processedVerticies[i]);
-		}
+		
+		multMatrixPoint(model3d->rotateMatrixY, &model3d->processedVerticies[i]);
 
 		model3d->processedVerticies[i].x = model3d->processedVerticies[i].x + model3d->center.x;
 		model3d->processedVerticies[i].y = model3d->processedVerticies[i].y + model3d->center.y;

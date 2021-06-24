@@ -6,7 +6,12 @@
 			"model3d.h": "c",
 			"float.h": "c",
 			"math.h": "c",
-			"stdio.h": "c"
+			"stdio.h": "c",
+			"linear_alg.h": "c",
+			"engine.h": "c",
+			"edge.h": "c",
+			"vector.h": "c",
+			"point.h": "c"
 		},
 		"C_Cpp.errorSquiggles": "Disabled"
 	}

@@ -10,14 +10,18 @@
 struct Model3D {
     int verticesCount;
     struct Point * vertices;
-    struct Point * processedVerticies;
+    struct Point * processedVerticies;    
 
     int edgesCount;
     struct Edge * edges;
 
     struct Point center;
 
-    int angleY;
+    int angleX, oldAngleX;
+    int angleY, oldAngleY;
+
+    struct Matrix4x4 * rotateMatrixX;
+    struct Matrix4x4 * rotateMatrixY;
 };
 
 struct Model3D * createOctahedron();

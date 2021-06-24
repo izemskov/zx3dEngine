@@ -4,11 +4,12 @@
  *
  * Copyright 2021 Ilya Zemskov */
 
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "vector.h"
 #include "point.h"
 #include "edge.h"
+#include "linear_alg.h"
 #include "model3d.h"
 
 struct Model3D * createOctahedron() {
@@ -87,76 +88,12 @@ struct Model3D * createOctahedron() {
     return model3D;
 }
 
-struct Model3D * createCube() {
-    struct Model3D * model3D = (struct Model3D *) malloc(sizeof(struct Model3D));
+struct Model3D * createCube() {    
+    struct Model3D * model3D = (struct Model3D *) malloc(sizeof(struct Model3D));                
 
     model3D->verticesCount = 8;
     model3D->vertices = (struct Point *) malloc(model3D->verticesCount * sizeof(struct Point));
-    model3D->processedVerticies = (struct Point *) malloc(model3D->verticesCount * sizeof(struct Point));
-
-    /*model3D->vertices[0].x = 10;
-    model3D->vertices[0].y = 10;
-    model3D->vertices[0].z = 0;
-
-    model3D->vertices[1].x = 10;
-    model3D->vertices[1].y = 20;
-    model3D->vertices[1].z = 0;
-
-    model3D->vertices[2].x = 20;
-    model3D->vertices[2].y = 20;
-    model3D->vertices[2].z = 0;
-
-    model3D->vertices[3].x = 20;
-    model3D->vertices[3].y = 10;
-    model3D->vertices[3].z = 0;
-
-    model3D->vertices[4].x = 10;
-    model3D->vertices[4].y = 10;
-    model3D->vertices[4].z = 10;
-
-    model3D->vertices[5].x = 10;
-    model3D->vertices[5].y = 20;
-    model3D->vertices[5].z = 10;
-
-    model3D->vertices[6].x = 20;
-    model3D->vertices[6].y = 20;
-    model3D->vertices[6].z = 10;
-
-    model3D->vertices[7].x = 20;
-    model3D->vertices[7].y = 10;
-    model3D->vertices[7].z = 10;*/
-
-    /*model3D->vertices[0].x = -1;
-    model3D->vertices[0].y = -1;
-    model3D->vertices[0].z = -1;
-
-    model3D->vertices[1].x = -1;
-    model3D->vertices[1].y = 1;
-    model3D->vertices[1].z = -1;
-
-    model3D->vertices[2].x = 1;
-    model3D->vertices[2].y = 1;
-    model3D->vertices[2].z = -1;
-
-    model3D->vertices[3].x = 1;
-    model3D->vertices[3].y = -1;
-    model3D->vertices[3].z = -1;
-
-    model3D->vertices[4].x = -1;
-    model3D->vertices[4].y = -1;
-    model3D->vertices[4].z = 1;
-
-    model3D->vertices[5].x = -1;
-    model3D->vertices[5].y = 1;
-    model3D->vertices[5].z = 1;
-
-    model3D->vertices[6].x = 1;
-    model3D->vertices[6].y = 1;
-    model3D->vertices[6].z = 1;
-
-    model3D->vertices[7].x = 1;
-    model3D->vertices[7].y = -1;
-    model3D->vertices[7].z = 1;*/
+    model3D->processedVerticies = (struct Point *) malloc(model3D->verticesCount * sizeof(struct Point));        
 
     model3D->vertices[0].x = -5;
     model3D->vertices[0].y = -5;
@@ -233,7 +170,21 @@ struct Model3D * createCube() {
     model3D->center.y = 0;
     model3D->center.z = 35;
 
+    model3D->angleX = 0;
+    model3D->oldAngleX = model3D->angleX;
     model3D->angleY = 0;
+    model3D->oldAngleY = model3D->angleY;
+
+    model3D->rotateMatrixY = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
+    getRotateOYMatrix(model3D->rotateMatrixY, model3D->angleY);
 
     return model3D;
+}
+
+void deleteModel(struct Model3D * model3d) {
+    free(model3d->vertices);
+    free(model3d->edges);
+    free(model3d->processedVerticies);
+    free(model3d->rotateMatrixY);
+    free(model3d);
 }

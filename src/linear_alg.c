@@ -5,6 +5,7 @@
  * Copyright 2021 Ilya Zemskov */
 
 #include <math.h>
+#include <stdio.h>
 
 #include "point.h"
 #include "edge.h"
@@ -25,7 +26,7 @@ void getRotateOYMatrix(struct Matrix4x4 * res, int angle) {
     res->values[0][0] = cosAngle;
     res->values[0][1] = 0;
     res->values[0][2] = sinAngle;
-    res->values[0][3] = 0;
+    res->values[0][3] = 0;    
 
     res->values[1][0] = 0;
     res->values[1][1] = 1;
@@ -41,6 +42,11 @@ void getRotateOYMatrix(struct Matrix4x4 * res, int angle) {
     res->values[3][1] = 0;
     res->values[3][2] = 0;
     res->values[3][3] = 1;    
+
+  /*  printf("%d %d %d %d\n", res->values[0][0], res->values[0][1], res->values[0][2], res->values[0][3]);
+    printf("%d %d %d %d\n", res->values[1][0], res->values[1][1], res->values[1][2], res->values[1][3]);
+    printf("%d %d %d %d\n", res->values[2][0], res->values[2][1], res->values[2][2], res->values[2][3]);
+    printf("%d %d %d %d\n", res->values[3][0], res->values[3][1], res->values[3][2], res->values[3][3]);    */
 
     res->isFloat[0][0] = 1;
     res->isFloat[0][1] = 0;

@@ -12,6 +12,7 @@ struct Matrix4x4 {
     char isFloat[4][4];
 };
 
+void getRotateOXMatrix(struct Matrix4x4 * res, int angle);
 void getRotateOYMatrix(struct Matrix4x4 * res, int angle);
 void multMatrixPoint(const struct Matrix4x4 * matrix, struct Point * point);
 void rotateModel(const struct Matrix4x4 * matrix, struct Model3D * model3d);
