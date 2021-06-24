@@ -44,13 +44,15 @@ int main() {
 		clearScreen();		
 		drawModel3D(model);
 
-		csleep(4);
+		//csleep(4);
 
 		model->angleY += 10;
 		if (model->angleY >= 360) 
 			model->angleY = model->angleY - 360;
 		
 		paintBuffer();
+
+		printf("%d", model->angleY);
 
 		/*cclgbuffer(0);
 

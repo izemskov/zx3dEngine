@@ -18,15 +18,15 @@
     #define HALF_SCREEN_WIDTH  15
     #define HALF_SCREEN_HEIGHT 15
 #else
-    /*#define SCREEN_WIDTH  256
+    #define SCREEN_WIDTH  256
     #define SCREEN_HEIGHT 192
     #define HALF_SCREEN_WIDTH  128
-    #define HALF_SCREEN_HEIGHT 96*/
+    #define HALF_SCREEN_HEIGHT 96
 
-    #define SCREEN_WIDTH  30
+    /*#define SCREEN_WIDTH  30
     #define SCREEN_HEIGHT 30
     #define HALF_SCREEN_WIDTH  15
-    #define HALF_SCREEN_HEIGHT 15
+    #define HALF_SCREEN_HEIGHT 15*/
 #endif
 
 #ifdef LOW_RESOLUTION_MODE

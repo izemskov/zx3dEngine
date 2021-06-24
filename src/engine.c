@@ -79,28 +79,9 @@ void drawModel3D(struct Model3D * model3d) {
 		xe = HALF_SCREEN_WIDTH + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].x / model3d->processedVerticies[model3d->edges[i].dst].z;
 		ye = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].y / model3d->processedVerticies[model3d->edges[i].dst].z;
 
-		//drawLine(xs, ys, xe, ye);
+		drawLine(xs, ys, xe, ye);
 
-		printf("xs = %d; ys = %d; xe = %d; ye = %d\n", xs, ys, xe, ye);
-	}
-}
-
-void unDrawModel3D(struct Model3D * model3d) {
-	if (model3d == NULL)
-		return;
-
-	for (int i = 0; i < model3d->edgesCount; i++) {
-		int xs, ys, xe, ye;
-
-		//printf("x = %d; y = %d; z = %d\n", model3d->processedVerticies[model3d->edges[i].src].x, model3d->processedVerticies[model3d->edges[i].src].y, model3d->processedVerticies[model3d->edges[i].src].z);
-	
-		xs = HALF_SCREEN_WIDTH + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].src].x / model3d->processedVerticies[model3d->edges[i].src].z;
-		ys = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].src].y / model3d->processedVerticies[model3d->edges[i].src].z;
-		
-		xe = HALF_SCREEN_WIDTH + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].x / model3d->processedVerticies[model3d->edges[i].dst].z;
-		ye = HALF_SCREEN_HEIGHT + SCREEN_DEPTH * model3d->processedVerticies[model3d->edges[i].dst].y / model3d->processedVerticies[model3d->edges[i].dst].z;
-
-		undraw(xs, ys, xe, ye);
+		//printf("xs = %d; ys = %d; xe = %d; ye = %d\n", xs, ys, xe, ye);
 	}
 }
 

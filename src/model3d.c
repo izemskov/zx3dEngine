@@ -126,6 +126,38 @@ struct Model3D * createCube() {
     model3D->vertices[7].y = 10;
     model3D->vertices[7].z = 10;*/
 
+    /*model3D->vertices[0].x = -1;
+    model3D->vertices[0].y = -1;
+    model3D->vertices[0].z = -1;
+
+    model3D->vertices[1].x = -1;
+    model3D->vertices[1].y = 1;
+    model3D->vertices[1].z = -1;
+
+    model3D->vertices[2].x = 1;
+    model3D->vertices[2].y = 1;
+    model3D->vertices[2].z = -1;
+
+    model3D->vertices[3].x = 1;
+    model3D->vertices[3].y = -1;
+    model3D->vertices[3].z = -1;
+
+    model3D->vertices[4].x = -1;
+    model3D->vertices[4].y = -1;
+    model3D->vertices[4].z = 1;
+
+    model3D->vertices[5].x = -1;
+    model3D->vertices[5].y = 1;
+    model3D->vertices[5].z = 1;
+
+    model3D->vertices[6].x = 1;
+    model3D->vertices[6].y = 1;
+    model3D->vertices[6].z = 1;
+
+    model3D->vertices[7].x = 1;
+    model3D->vertices[7].y = -1;
+    model3D->vertices[7].z = 1;*/
+
     model3D->vertices[0].x = -5;
     model3D->vertices[0].y = -5;
     model3D->vertices[0].z = -5;
@@ -197,9 +229,9 @@ struct Model3D * createCube() {
     model3D->edges[11].src = 3;
     model3D->edges[11].dst = 7;
 
-    model3D->center.x = 10;
-    model3D->center.y = 10;
-    model3D->center.z = 20;
+    model3D->center.x = 0;
+    model3D->center.y = 0;
+    model3D->center.z = 35;
 
     model3D->angleY = 0;
 
