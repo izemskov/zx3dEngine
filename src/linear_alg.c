@@ -14,6 +14,56 @@
 
 #define PI_DIV_180 0.0174
 
+void getRotateOXMatrix(struct Matrix4x4 * res, int angle) {
+    if (res == NULL)
+        return;
+
+    double angleRad = angle * PI_DIV_180;
+
+    int cosAngle = round(cos(angleRad) * 1000);
+    int sinAngle = round(sin(angleRad) * 1000);
+
+    res->values[0][0] = 1;
+    res->values[0][1] = 0;
+    res->values[0][2] = 0;
+    res->values[0][3] = 0;
+
+    res->values[1][0] = 0;
+    res->values[1][1] = cosAngle;
+    res->values[1][2] = -1 * sinAngle;
+    res->values[1][3] = 0;
+
+    res->values[2][0] = 0;
+    res->values[2][1] = sinAngle;
+    res->values[2][2] = cosAngle;
+    res->values[2][3] = 0;
+
+    res->values[3][0] = 0;
+    res->values[3][1] = 0;
+    res->values[3][2] = 0;
+    res->values[3][3] = 1;    
+
+    res->isFloat[0][0] = 0;
+    res->isFloat[0][1] = 0;
+    res->isFloat[0][2] = 0;
+    res->isFloat[0][3] = 0;
+
+    res->isFloat[1][0] = 0;
+    res->isFloat[1][1] = 1;
+    res->isFloat[1][2] = 1;
+    res->isFloat[1][3] = 0;
+
+    res->isFloat[2][0] = 0;
+    res->isFloat[2][1] = 1;
+    res->isFloat[2][2] = 1;
+    res->isFloat[2][3] = 0;
+
+    res->isFloat[3][0] = 0;
+    res->isFloat[3][1] = 0;
+    res->isFloat[3][2] = 0;
+    res->isFloat[3][3] = 0;
+}
+
 void getRotateOYMatrix(struct Matrix4x4 * res, int angle) {
     if (res == NULL)
         return;
@@ -43,11 +93,6 @@ void getRotateOYMatrix(struct Matrix4x4 * res, int angle) {
     res->values[3][2] = 0;
     res->values[3][3] = 1;    
 
-  /*  printf("%d %d %d %d\n", res->values[0][0], res->values[0][1], res->values[0][2], res->values[0][3]);
-    printf("%d %d %d %d\n", res->values[1][0], res->values[1][1], res->values[1][2], res->values[1][3]);
-    printf("%d %d %d %d\n", res->values[2][0], res->values[2][1], res->values[2][2], res->values[2][3]);
-    printf("%d %d %d %d\n", res->values[3][0], res->values[3][1], res->values[3][2], res->values[3][3]);    */
-
     res->isFloat[0][0] = 1;
     res->isFloat[0][1] = 0;
     res->isFloat[0][2] = 1;
@@ -68,6 +113,66 @@ void getRotateOYMatrix(struct Matrix4x4 * res, int angle) {
     res->isFloat[3][2] = 0;
     res->isFloat[3][3] = 0;
 }
+
+/*
+              cos(y)                     0                sin(y)  
+   -sin(x) * -sin(y)                cos(x)      -sin(x) * cos(y)  
+    cos(x) * -sin(y)                sin(x)       cos(x) * cos(y)  
+*/
+
+/*
+     cos(y) * cos(z)      sin(y) * sin(x) - cos(y) * sin(z) * cos(x)      cos(y) * sin(z) * sin(x) + sin(y) * cos(x)
+              sin(z)      cos(z) * cos(x)                                 -1 * cos(z) * sin(x)
+-1 * sin(y) * cos(z)      sin(y) * sin(z) * cos(x) + cos(y) * sin(x)      cos(y) * cos(x) - sin(y) * sin(z) * sin(x)
+*/
+void getRotateMatrix(const struct Matrix3x3 * res, int angleX, int angleY) {
+    int angleZ = 0;
+
+    double angleRadX = angleX * PI_DIV_180;
+
+    double cosAngleX = cos(angleRadX);
+    double sinAngleX = sin(angleRadX);
+
+    double angleRadY = angleY * PI_DIV_180;
+
+    double cosAngleY = cos(angleRadY);
+    double sinAngleY = sin(angleRadY);
+
+    double angleRadZ = angleZ * PI_DIV_180;
+
+    double cosAngleZ = cos(angleRadZ);
+    double sinAngleZ = sin(angleRadZ);
+
+    res->values[0][0] = round((cosAngleY * cosAngleZ) * ROUND_COEFF);
+    res->values[0][1] = round((sinAngleY * sinAngleX - cosAngleY * sinAngleZ * cosAngleX) * ROUND_COEFF);
+    res->values[0][2] = round((cosAngleY * sinAngleZ * sinAngleX + sinAngleY * cosAngleX) * ROUND_COEFF);    
+
+    res->values[1][0] = round((sinAngleZ) * ROUND_COEFF);
+    res->values[1][1] = round((cosAngleZ * cosAngleX) * ROUND_COEFF);
+    res->values[1][2] = round((-1 * cosAngleZ * sinAngleX) * ROUND_COEFF);    
+
+    res->values[2][0] = round((-1 * sinAngleY * cosAngleZ) * ROUND_COEFF);
+    res->values[2][1] = round((sinAngleY * sinAngleZ * cosAngleX + cosAngleY * sinAngleX) * ROUND_COEFF);
+    res->values[2][2] = round((cosAngleY * cosAngleX - sinAngleY * sinAngleZ * sinAngleX) * ROUND_COEFF);
+}
+
+/*void multMatrixMatrix(const struct Matrix4x4 * matrix1, const struct Matrix4x4 * matrix2, Matrix4x4 * res) {
+    for (int  i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            int s = 0;
+            for (int k = 0; k < 4; k++) {
+                if (matrix1->isFloat[i][k] == 0 && matrix2->isFloat[k][j] == 0) {
+                    s = s + matrix1->values[i][k] * matrix2->values[k][j];
+                }
+                else if (matrix1->isFloat[i][k] == 1 && matrix2->isFloat[k][j] == 1) {
+                    double value1 = ((double) matrix1->values[i][k]) / 1000.0;
+                    double value2 = ((double) matrix2->values[k][j]) / 1000.0;
+                }
+            }
+            res[i][j] = s;
+        }
+    }
+}*/
 
 void multMatrixPoint(const struct Matrix4x4 * matrix, struct Point * point) {
     int column[4];    
@@ -103,5 +208,38 @@ void rotateModel(const struct Matrix4x4 * matrix, struct Model3D * model3d) {
 
     for (int i = 0; i < model3d->verticesCount; i++) {
         multMatrixPoint(matrix, &model3d->vertices[i]);
+    }
+}
+
+void multMatrixPoint2(const struct Matrix3x3 * matrix, struct Point * point) {
+    int column[3];    
+    int res[3];
+
+    if (matrix == NULL || point == NULL)
+        return;    
+
+    column[0] = point->x;
+    column[1] = point->y;
+    column[2] = point->z;    
+
+    for (int i = 0; i < 3; i++) {
+        res[i] = 0;
+
+        for (int j = 0; j < 3; j++) {
+            res[i] = res[i] + (matrix->values[i][j] * column[j] / ROUND_COEFF);
+        }
+    }
+
+    point->x = res[0];
+    point->y = res[1];
+    point->z = res[2];
+}
+
+void rotateModel2(const struct Matrix3x3 * matrix, struct Model3D * model3d) {
+    if (matrix == NULL || model3d == NULL)
+        return;
+
+    for (int i = 0; i < model3d->verticesCount; i++) {
+        multMatrixPoint2(matrix, &model3d->vertices[i]);
     }
 }

@@ -175,8 +175,14 @@ struct Model3D * createCube() {
     model3D->angleY = 0;
     model3D->oldAngleY = model3D->angleY;
 
+    /*model3D->rotateMatrixX = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
+    getRotateOXMatrix(model3D->rotateMatrixX, model3D->angleX);
+
     model3D->rotateMatrixY = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
-    getRotateOYMatrix(model3D->rotateMatrixY, model3D->angleY);
+    getRotateOYMatrix(model3D->rotateMatrixY, model3D->angleY);*/
+
+    model3D->rotateMatrix = (struct Matrix3x3 *) malloc(sizeof(struct Matrix3x3));
+    getRotateMatrix(model3D->rotateMatrix, model3D->angleX, model3D->angleY);
 
     return model3D;
 }

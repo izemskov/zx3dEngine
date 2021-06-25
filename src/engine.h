@@ -44,6 +44,7 @@ void drawVector(struct Vector * vector);
 void drawPoint(struct Point * point);
 void drawModel3D(struct Model3D * model3d);
 void processModel(struct Model3D * model3d);
+void processModel2(struct Model3D * model3d);
 
 void initContext();
 

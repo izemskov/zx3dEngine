@@ -45,10 +45,13 @@ int main() {
 	//model->angleY += 10;
 	//processModel(model);
 
+	model->angleX = 0;
+	model->angleY = 0;
+
 	int i = 0;
 	while (1) {	
-		processModel(model);		
-		clearScreen();		
+		processModel2(model);
+		clearScreen();
 		drawModel3D(model);
 
 		//csleep(4);
@@ -56,6 +59,10 @@ int main() {
 		model->angleY += 10;
 		if (model->angleY >= 360) 
 			model->angleY = model->angleY - 360;
+
+		model->angleX += 10;
+		if (model->angleX >= 360) 
+			model->angleX = model->angleX - 360;
 		
 		paintBuffer();		
 	}

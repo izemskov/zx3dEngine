@@ -22,6 +22,8 @@ struct Model3D {
 
     struct Matrix4x4 * rotateMatrixX;
     struct Matrix4x4 * rotateMatrixY;
+
+    struct Matrix3x3 * rotateMatrix;
 };
 
 struct Model3D * createOctahedron();

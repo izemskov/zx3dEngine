@@ -41,8 +41,14 @@ void processModel(struct Model3D * model3d) {
 	if (model3d == NULL)
 		return;	
 
+	if (model3d->angleX != model3d->oldAngleX) {
+		getRotateOXMatrix(model3d->rotateMatrixX, model3d->angleX);
+		model3d->oldAngleX = model3d->angleX;
+	}
+
 	if (model3d->angleY != model3d->oldAngleY) {
 		getRotateOYMatrix(model3d->rotateMatrixY, model3d->angleY);
+		model3d->oldAngleY = model3d->angleY;
 	}
 
 	for (int i = 0; i < model3d->verticesCount; i++) {
@@ -50,7 +56,34 @@ void processModel(struct Model3D * model3d) {
 		model3d->processedVerticies[i].y = model3d->vertices[i].y;
 		model3d->processedVerticies[i].z = model3d->vertices[i].z;
 		
+		multMatrixPoint(model3d->rotateMatrixX, &model3d->processedVerticies[i]);
 		multMatrixPoint(model3d->rotateMatrixY, &model3d->processedVerticies[i]);
+
+		model3d->processedVerticies[i].x = model3d->processedVerticies[i].x + model3d->center.x;
+		model3d->processedVerticies[i].y = model3d->processedVerticies[i].y + model3d->center.y;
+		model3d->processedVerticies[i].z = model3d->processedVerticies[i].z + model3d->center.z;
+
+		//printf("x = %d; y = %d; z = %d\n", model3d->processedVerticies[model3d->edges[i].src].x, model3d->processedVerticies[model3d->edges[i].src].y, model3d->processedVerticies[model3d->edges[i].src].z);
+	}
+}
+
+void processModel2(struct Model3D * model3d) {
+	if (model3d == NULL)
+		return;	
+
+	if (model3d->angleX != model3d->oldAngleX || model3d->angleY != model3d->oldAngleY) {
+		getRotateMatrix(model3d->rotateMatrix, model3d->angleX, model3d->angleY);
+
+		model3d->oldAngleX = model3d->angleX;
+		model3d->oldAngleY = model3d->angleY;
+	}
+
+	for (int i = 0; i < model3d->verticesCount; i++) {
+		model3d->processedVerticies[i].x = model3d->vertices[i].x;
+		model3d->processedVerticies[i].y = model3d->vertices[i].y;
+		model3d->processedVerticies[i].z = model3d->vertices[i].z;
+		
+		multMatrixPoint2(model3d->rotateMatrix, &model3d->processedVerticies[i]);
 
 		model3d->processedVerticies[i].x = model3d->processedVerticies[i].x + model3d->center.x;
 		model3d->processedVerticies[i].y = model3d->processedVerticies[i].y + model3d->center.y;
