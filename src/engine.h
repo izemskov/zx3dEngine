@@ -13,10 +13,10 @@
 #include "model3d.h"
 
 #ifdef LOW_RESOLUTION_MODE
-    #define SCREEN_WIDTH  30
-    #define SCREEN_HEIGHT 30
-    #define HALF_SCREEN_WIDTH  15
-    #define HALF_SCREEN_HEIGHT 15
+    #define SCREEN_WIDTH  32
+    #define SCREEN_HEIGHT 48
+    #define HALF_SCREEN_WIDTH  16
+    #define HALF_SCREEN_HEIGHT 24
 #else
     #define SCREEN_WIDTH  256
     #define SCREEN_HEIGHT 192
@@ -29,6 +29,8 @@
     #define HALF_SCREEN_HEIGHT 15*/
 #endif
 
+#define SCREEN_DEPTH  50
+
 #ifdef LOW_RESOLUTION_MODE
     #ifdef ALTLOWGFX  
         #define ddraw(x,y,x1,y1,c) cdraw(2*(x),y,2*(x1),y1,c);
@@ -37,14 +39,11 @@
     #endif
 #endif
 
-#define SCREEN_DEPTH  50
-
 void drawLine(int x1, int y1, int x2, int y2);
 void drawVector(struct Vector * vector);
 void drawPoint(struct Point * point);
 void drawModel3D(struct Model3D * model3d);
 void processModel(struct Model3D * model3d);
-void processModel2(struct Model3D * model3d);
 
 void initContext();
 

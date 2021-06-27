@@ -11,7 +11,9 @@
 			-v - Verbose
 			-lndos - Link with library ndos
 
+		zcc +zx -lndos -lmzx -v -create-app -DORTHOGONAL_MODE -o zx3dEngine main.c engine.c point.c vector.c model3d.c linear_alg.c
 		zcc +zx -lndos -lmzx -v -create-app -DLOW_RESOLUTION_MODE -o zx3dEngine main.c engine.c point.c vector.c model3d.c linear_alg.c
+		zcc +zx -lndos -lmzx -v -create-app -DLOW_RESOLUTION_MODE -DORTHOGONAL_MODE -o zx3dEngine main.c engine.c point.c vector.c model3d.c linear_alg.c
 */
 
 #ifdef LOW_RESOLUTION_MODE
@@ -40,21 +42,21 @@ int main() {
 
 #ifndef LOW_RESOLUTION_MODE
 	model->center.z = 15;
+#else
+	model->center.y = -10;
+	model->center.z = 40;
 #endif
-
-	//model->angleY += 10;
-	//processModel(model);
 
 	model->angleX = 0;
 	model->angleY = 0;
 
 	int i = 0;
 	while (1) {	
-		processModel2(model);
+		processModel(model);
 		clearScreen();
 		drawModel3D(model);
 
-		//csleep(4);
+		csleep(4);
 
 		model->angleY += 10;
 		if (model->angleY >= 360) 
@@ -67,33 +69,6 @@ int main() {
 		paintBuffer();		
 	}
 	deleteModel(model);	
-
-	//double a = -0.01;
-
-	//printf("%f\n", a);
-	//printf("%f\n", fabs(a));
-
-	//printf("ok\n");
-
-	/*struct Point * point1 = newPoint(1, 2, 1);
-	struct Point * point2 = newPoint(0, 4, 4);
-	struct Vector * vector1 = newVector(2, 0, 0);
-	struct Vector * vector2;	
-
-	drawPoint(point1);
-	drawPoint(point2);
-
-	vector2 = subtractPointFromPoint(point1, point2);
-
-	addVectorToVector(vector1, vector2);
-
-	addVectorToPoint(point1, vector1);
-
-	drawPoint(point1);
-
-	subtractVectorFromPoint(point2, vector2);
-
-	drawPoint(point2);*/	
 
 	return 0;
 }

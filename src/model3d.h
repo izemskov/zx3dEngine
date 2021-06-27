@@ -20,9 +20,6 @@ struct Model3D {
     int angleX, oldAngleX;
     int angleY, oldAngleY;
 
-    struct Matrix4x4 * rotateMatrixX;
-    struct Matrix4x4 * rotateMatrixY;
-
     struct Matrix3x3 * rotateMatrix;
 };
 

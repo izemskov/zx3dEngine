@@ -175,12 +175,6 @@ struct Model3D * createCube() {
     model3D->angleY = 0;
     model3D->oldAngleY = model3D->angleY;
 
-    /*model3D->rotateMatrixX = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
-    getRotateOXMatrix(model3D->rotateMatrixX, model3D->angleX);
-
-    model3D->rotateMatrixY = (struct Matrix4x4 *) malloc(sizeof(struct Matrix4x4));
-    getRotateOYMatrix(model3D->rotateMatrixY, model3D->angleY);*/
-
     model3D->rotateMatrix = (struct Matrix3x3 *) malloc(sizeof(struct Matrix3x3));
     getRotateMatrix(model3D->rotateMatrix, model3D->angleX, model3D->angleY);
 
@@ -191,6 +185,6 @@ void deleteModel(struct Model3D * model3d) {
     free(model3d->vertices);
     free(model3d->edges);
     free(model3d->processedVerticies);
-    free(model3d->rotateMatrixY);
+    free(model3d->rotateMatrix);
     free(model3d);
 }
