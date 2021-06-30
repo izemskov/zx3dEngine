@@ -48,16 +48,19 @@ void processModel(struct Model3D * model3d) {
 		model3d->oldAngleY = model3d->angleY;
 	}
 
+	getTranslateMatrix(model3d->translateMatrix, model3d->center.x, model3d->center.y, model3d->center.z);
+
 	for (int i = 0; i < model3d->verticesCount; i++) {
 		model3d->processedVerticies[i].x = model3d->vertices[i].x;
 		model3d->processedVerticies[i].y = model3d->vertices[i].y;
 		model3d->processedVerticies[i].z = model3d->vertices[i].z;
 		
 		multMatrixPoint(model3d->rotateMatrix, &model3d->processedVerticies[i]);
+		multMatrixPoint4x4(model3d->translateMatrix, &model3d->processedVerticies[i]);
 
-		model3d->processedVerticies[i].x = model3d->processedVerticies[i].x + model3d->center.x;
-		model3d->processedVerticies[i].y = model3d->processedVerticies[i].y + model3d->center.y;
-		model3d->processedVerticies[i].z = model3d->processedVerticies[i].z + model3d->center.z;
+		model3d->processedVerticies[i].x = model3d->processedVerticies[i].x;
+		model3d->processedVerticies[i].y = model3d->processedVerticies[i].y;
+		model3d->processedVerticies[i].z = model3d->processedVerticies[i].z;
 
 		//printf("x = %d; y = %d; z = %d\n", model3d->processedVerticies[model3d->edges[i].src].x, model3d->processedVerticies[model3d->edges[i].src].y, model3d->processedVerticies[model3d->edges[i].src].z);
 	}

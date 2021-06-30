@@ -21,9 +21,13 @@ struct Model3D {
     int angleY, oldAngleY;
 
     struct Matrix3x3 * rotateMatrix;
+    struct Matrix4x4 * translateMatrix;
 };
 
 struct Model3D * createOctahedron();
 struct Model3D * createCube();
+void printModel(struct Model3D * model3d);
+void setAngleX(struct Model3D * model3D, int angle);
+void setAngleY(struct Model3D * model3D, int angle);
 
 #endif

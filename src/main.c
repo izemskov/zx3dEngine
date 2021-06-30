@@ -34,41 +34,46 @@ long heap;
 
 int main() {
 	mallinit();
-	sbrk(30000, 6000);
+	sbrk(25000, 25000);
 
 	initContext();	
 
 	struct Model3D * model = createCube();	
+	struct Model3D * model2 = createOctahedron();	
 
 #ifndef LOW_RESOLUTION_MODE
 	model->center.z = 15;
-#else
+#else	
 	model->center.y = -10;
 	model->center.z = 40;
+
+	model2->center.y = -10;
+	model2->center.z = 45;
 #endif
 
-	model->angleX = 0;
-	model->angleY = 0;
+	setAngleX(model, 0);
+	setAngleY(model, 0);
+
+	setAngleX(model2, 0);
+	setAngleY(model2, 0);
 
 	int i = 0;
 	while (1) {	
 		processModel(model);
+		//processModel(model2);
 		clearScreen();
 		drawModel3D(model);
+		//drawModel3D(model2);
 
 		csleep(4);
 
-		model->angleY += 10;
-		if (model->angleY >= 360) 
-			model->angleY = model->angleY - 360;
+		setAngleY(model, model->angleY + 10);	
+		setAngleY(model2, model2->angleY + 10);		
 
-		model->angleX += 10;
-		if (model->angleX >= 360) 
-			model->angleX = model->angleX - 360;
-		
-		paintBuffer();		
+		paintBuffer();
 	}
 	deleteModel(model);	
+	deleteModel(model2);	
 
 	return 0;
 }

@@ -56,6 +56,31 @@ void getRotateMatrix(const struct Matrix3x3 * res, int angleX, int angleY) {
     res->values[2][2] = round((cosAngleY * cosAngleX - sinAngleY * sinAngleZ * sinAngleX) * ROUND_COEFF);
 }
 
+void getTranslateMatrix(const struct Matrix4x4 * res, int x, int y, int z) {
+    if (res == NULL)
+        return;
+
+    res->values[0][0] = 1;
+    res->values[0][1] = 0;
+    res->values[0][2] = 0;
+    res->values[0][3] = x;
+
+    res->values[1][0] = 0;
+    res->values[1][1] = 1;
+    res->values[1][2] = 0;
+    res->values[1][3] = y;
+
+    res->values[2][0] = 0;
+    res->values[2][1] = 0;
+    res->values[2][2] = 1;
+    res->values[2][3] = z;
+
+    res->values[3][0] = 0;
+    res->values[3][1] = 0;
+    res->values[3][2] = 0;
+    res->values[3][3] = 1;    
+}
+
 /*void multMatrixMatrix(const struct Matrix4x4 * matrix1, const struct Matrix4x4 * matrix2, Matrix4x4 * res) {
     for (int  i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -98,11 +123,27 @@ void multMatrixPoint(const struct Matrix3x3 * matrix, struct Point * point) {
     point->z = res[2];
 }
 
-void rotateModel(const struct Matrix3x3 * matrix, struct Model3D * model3d) {
-    if (matrix == NULL || model3d == NULL)
-        return;
+void multMatrixPoint4x4(const struct Matrix4x4 * matrix, struct Point * point) {
+    int column[4];    
+    int res[4];
 
-    for (int i = 0; i < model3d->verticesCount; i++) {
-        multMatrixPoint(matrix, &model3d->vertices[i]);
+    if (matrix == NULL || point == NULL)
+        return;    
+
+    column[0] = point->x;
+    column[1] = point->y;
+    column[2] = point->z;    
+    column[3] = 1;
+
+    for (int i = 0; i < 4; i++) {
+        res[i] = 0;
+
+        for (int j = 0; j < 4; j++) {
+            res[i] = res[i] + matrix->values[i][j] * column[j];
+        }
     }
+
+    point->x = res[0];
+    point->y = res[1];
+    point->z = res[2];
 }
